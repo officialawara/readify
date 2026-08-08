@@ -30,14 +30,60 @@ document.addEventListener('DOMContentLoaded', async () => {
   const savedTheme = localStorage.getItem('readify_theme') || 'paper';
   setTheme(savedTheme);
 
-  // Set Date Stamp
+  // 2. Dynamic Real-Time Date Formatting
   const dateStamp = document.getElementById('date-stamp');
   if (dateStamp) {
     const now = new Date();
-    dateStamp.textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
+    dateStamp.textContent = now.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric' 
+    }).toUpperCase();
   }
 
-  // 2. View Switcher (Library <-> Reader)
+  // 3. Header Font Style & Font Size Controls
+  const headerFontSelect = document.getElementById('header-font-select');
+  const headerFontInc = document.getElementById('header-font-inc');
+  const headerFontDec = document.getElementById('header-font-dec');
+  const headerFontSizeBadge = document.getElementById('header-font-size-badge');
+
+  function updateFontSizeDisplay() {
+    const currentSize = window.broadsheetReader ? window.broadsheetReader.fontSize : 18;
+    if (headerFontSizeBadge) headerFontSizeBadge.textContent = `${currentSize}px`;
+  }
+
+  headerFontSelect?.addEventListener('change', (e) => {
+    const broadsheetArea = document.getElementById('broadsheet-text-area');
+    if (broadsheetArea) broadsheetArea.style.fontFamily = e.target.value;
+    localStorage.setItem('readify_font_family', e.target.value);
+    showToast('Font style updated');
+  });
+
+  headerFontInc?.addEventListener('click', () => {
+    if (window.broadsheetReader) {
+      window.broadsheetReader.adjustFontSize(1);
+      updateFontSizeDisplay();
+    }
+  });
+
+  headerFontDec?.addEventListener('click', () => {
+    if (window.broadsheetReader) {
+      window.broadsheetReader.adjustFontSize(-1);
+      updateFontSizeDisplay();
+    }
+  });
+
+  // Restore Saved Font Style
+  const savedFont = localStorage.getItem('readify_font_family');
+  const broadsheetArea = document.getElementById('broadsheet-text-area');
+  if (savedFont && broadsheetArea) {
+    broadsheetArea.style.fontFamily = savedFont;
+    if (headerFontSelect) headerFontSelect.value = savedFont;
+  }
+  updateFontSizeDisplay();
+
+  // 4. View Switcher (Library <-> Reader)
   const viewLibrary = document.getElementById('view-library');
   const viewReader = document.getElementById('view-reader');
   const btnBackLibrary = document.getElementById('btn-back-library');
@@ -58,49 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // 3. Typography & Printing Press Settings Modal
-  const btnSettingsModal = document.getElementById('btn-settings-modal');
-  const modalSettings = document.getElementById('modal-settings');
-  const btnCloseSettings = document.getElementById('btn-close-settings');
-  const settingFontFamily = document.getElementById('setting-font-family');
-  const settingLineHeight = document.getElementById('setting-line-height');
-  const settingTextAlign = document.getElementById('setting-text-align');
-
-  btnSettingsModal?.addEventListener('click', () => modalSettings.classList.add('active'));
-  btnCloseSettings?.addEventListener('click', () => modalSettings.classList.remove('active'));
-
-  settingFontFamily?.addEventListener('change', (e) => {
-    const broadsheetArea = document.getElementById('broadsheet-text-area');
-    if (broadsheetArea) broadsheetArea.style.fontFamily = e.target.value;
-    localStorage.setItem('readify_font_family', e.target.value);
-    showToast('Font updated');
-  });
-
-  settingLineHeight?.addEventListener('change', (e) => {
-    const broadsheetArea = document.getElementById('broadsheet-text-area');
-    if (broadsheetArea) broadsheetArea.style.lineHeight = e.target.value;
-    localStorage.setItem('readify_line_height', e.target.value);
-    showToast('Line spacing updated');
-  });
-
-  settingTextAlign?.addEventListener('change', (e) => {
-    const broadsheetArea = document.getElementById('broadsheet-text-area');
-    if (broadsheetArea) broadsheetArea.style.textAlign = e.target.value;
-    localStorage.setItem('readify_text_align', e.target.value);
-    showToast('Text alignment updated');
-  });
-
-  // Restore Settings
-  const savedFont = localStorage.getItem('readify_font_family');
-  const savedLineHeight = localStorage.getItem('readify_line_height');
-  const savedTextAlign = localStorage.getItem('readify_text_align');
-  const broadsheetArea = document.getElementById('broadsheet-text-area');
-  
-  if (savedFont && broadsheetArea) broadsheetArea.style.fontFamily = savedFont;
-  if (savedLineHeight && broadsheetArea) broadsheetArea.style.lineHeight = savedLineHeight;
-  if (savedTextAlign && broadsheetArea) broadsheetArea.style.textAlign = savedTextAlign;
-
-  // 4. File Drag & Drop Workbench
+  // 5. File Drag & Drop Workbench
   const workbenchDropzone = document.getElementById('workbench-dropzone');
   const fileInput = document.getElementById('file-input');
   const btnOpenFile = document.getElementById('btn-open-file');
@@ -195,7 +199,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // 5. Library Rack Renderer
+  // 6. Library Rack Renderer
   async function renderLibraryRack() {
     const grid = document.getElementById('library-grid');
     const emptyNotice = document.getElementById('empty-rack-notice');
@@ -265,9 +269,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     switchView('reader');
     await window.broadsheetReader.loadBook(book);
     bindAudioControls();
+    updateFontSizeDisplay();
   }
 
-  // 6. Audiobook TTS Controls Binding
+  // 7. Audiobook TTS Controls Binding
   function bindAudioControls() {
     const btnPlay = document.getElementById('btn-tts-play');
     const btnPause = document.getElementById('btn-tts-pause');

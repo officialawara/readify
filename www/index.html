@@ -19,13 +19,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 
-  <!-- Offline Local Vendor JS Libraries (Zero CDN Dependency for Maximum Security) -->
-  <script src="js/vendor/pdf.min.js?v=1.0.1"></script>
-  <script src="js/vendor/jszip.min.js?v=1.0.1"></script>
-  <script src="js/vendor/epub.min.js?v=1.0.1"></script>
+  <!-- Offline Local Vendor JS Libraries -->
+  <script src="js/vendor/pdf.min.js?v=1.0.2"></script>
+  <script src="js/vendor/jszip.min.js?v=1.0.2"></script>
+  <script src="js/vendor/epub.min.js?v=1.0.2"></script>
 
   <!-- App Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css?v=1.0.1">
+  <link rel="stylesheet" href="css/styles.css?v=1.0.2">
 </head>
 <body class="theme-paper">
 
@@ -33,23 +33,38 @@
 
     <!-- MASTHEAD HEADER -->
     <header class="gazette-header">
-      <img src="assets/masthead.jpg" alt="Broadsheet Gazette Banner" class="gazette-banner-img">
-      
-      <div class="gazette-title-group">
-        <h1 class="gazette-masthead-title">The Readify Gazette</h1>
-        <div class="gazette-subtitle">★ Letterpress eReader & Phonograph Audiobook Edition ★</div>
+      <div class="gazette-banner-container">
+        <img src="assets/masthead.jpg" alt="Broadsheet Gazette Banner" class="gazette-banner-img">
+        <div class="gazette-title-overlay">
+          <h1 class="gazette-masthead-title">The Readify Gazette</h1>
+          <div class="gazette-subtitle">★ LETTERPRESS eREADER & PHONOGRAPH AUDIOBOOK ★</div>
+        </div>
       </div>
 
       <div class="gazette-submeta">
-        <div>VOL. CXXIV — NO. 42</div>
-        <div>LONDON & NEW YORK PRINTING PRESS</div>
-        <div id="date-stamp">SPECIAL EDITION</div>
+        <div class="gazette-date-badge">
+          📅 <span id="date-stamp">TODAY</span>
+        </div>
         
         <div class="gazette-controls">
+          <!-- Font Style Picker -->
+          <label for="header-font-select" class="press-badge">Font:</label>
+          <select id="header-font-select" class="press-select">
+            <option value="'Newsreader', 'Lora', Georgia, serif">Newsreader Gazette</option>
+            <option value="'Lora', serif">Lora Classic Book</option>
+            <option value="'Playfair Display', serif">Playfair Editorial</option>
+            <option value="'Courier Prime', monospace">Typewriter Monospace</option>
+          </select>
+
+          <!-- Quick Font Size Controls -->
+          <button class="press-btn" id="header-font-dec" title="Decrease Text Size">A-</button>
+          <span class="press-badge" id="header-font-size-badge">18px</span>
+          <button class="press-btn" id="header-font-inc" title="Increase Text Size">A+</button>
+
+          <!-- Theme Edition Switcher -->
           <button class="press-btn" id="btn-theme-paper" title="Newsprint Paper Mode">📄 Paper</button>
           <button class="press-btn" id="btn-theme-sepia" title="Warm Parchment Mode">📜 Parchment</button>
           <button class="press-btn" id="btn-theme-night" title="Midnight Press Dark Mode">🌙 Night</button>
-          <button class="press-btn press-btn-primary" id="btn-settings-modal" title="Typography & Press Settings">⚙️ Settings</button>
         </div>
       </div>
     </header>
@@ -188,53 +203,15 @@
     </div>
   </div>
 
-  <!-- PRESS TYPOGRAPHY & LAYOUT SETTINGS MODAL -->
-  <div class="modal-overlay" id="modal-settings">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Printing Press Settings</h3>
-        <button class="press-btn" id="btn-close-settings">✕ Close</button>
-      </div>
-      <div style="font-family: var(--font-body); font-size: 1rem; line-height: 1.6;">
-        <div style="margin-bottom: 1.25rem;">
-          <label style="font-family: var(--font-typewriter); font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 0.4rem;">TYPESETTING FONT:</label>
-          <select id="setting-font-family" class="press-select" style="width: 100%; padding: 0.5rem;">
-            <option value="'Newsreader', 'Lora', Georgia, serif">Newsreader Gazette Serif (Default)</option>
-            <option value="'Lora', serif">Lora Classic Book</option>
-            <option value="'Playfair Display', serif">Playfair Editorial</option>
-            <option value="'Courier Prime', monospace">Typewriter Monospace</option>
-          </select>
-        </div>
-
-        <div style="margin-bottom: 1.25rem;">
-          <label style="font-family: var(--font-typewriter); font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 0.4rem;">LINE SPACING:</label>
-          <select id="setting-line-height" class="press-select" style="width: 100%; padding: 0.5rem;">
-            <option value="1.5">Compact (1.5x)</option>
-            <option value="1.75" selected>Standard Gazette (1.75x)</option>
-            <option value="2.0">Relaxed Editorial (2.0x)</option>
-          </select>
-        </div>
-
-        <div style="margin-bottom: 1.25rem;">
-          <label style="font-family: var(--font-typewriter); font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 0.4rem;">TEXT ALIGNMENT:</label>
-          <select id="setting-text-align" class="press-select" style="width: 100%; padding: 0.5rem;">
-            <option value="justify" selected>Justified Broadsheet</option>
-            <option value="left">Left Aligned</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- TOAST NOTIFICATION -->
   <div id="toast-notice"></div>
 
   <!-- JS Modules -->
-  <script src="js/library.js?v=1.0.1"></script>
-  <script src="js/pdf-handler.js?v=1.0.1"></script>
-  <script src="js/epub-handler.js?v=1.0.1"></script>
-  <script src="js/tts-engine.js?v=1.0.1"></script>
-  <script src="js/reader.js?v=1.0.1"></script>
-  <script src="js/app.js?v=1.0.1"></script>
+  <script src="js/library.js?v=1.0.2"></script>
+  <script src="js/pdf-handler.js?v=1.0.2"></script>
+  <script src="js/epub-handler.js?v=1.0.2"></script>
+  <script src="js/tts-engine.js?v=1.0.2"></script>
+  <script src="js/reader.js?v=1.0.2"></script>
+  <script src="js/app.js?v=1.0.2"></script>
 </body>
 </html>

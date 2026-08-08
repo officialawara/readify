@@ -6,5 +6,3 @@ android/build/
 android/app/build/
 android/.gradle/
 android/captures/
-android/gradlew
-android/gradlew.bat

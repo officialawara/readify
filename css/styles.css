@@ -25,8 +25,6 @@
   --font-engraved: 'Cinzel', serif;
 
   /* Layout Spacing */
-  --header-height: 70px;
-  --reader-max-width: 1200px;
   --transition-speed: 0.2s;
 }
 
@@ -67,8 +65,8 @@ html, body {
   background-color: var(--bg-color);
   color: var(--ink-primary);
   font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.65;
+  font-size: 18px;
+  line-height: 1.7;
   overflow-x: hidden;
   transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
@@ -100,50 +98,46 @@ body::before {
    ========================================================================== */
 .gazette-header {
   border-bottom: 4px double var(--paper-border);
-  padding: 1rem 0 0.75rem 0;
+  padding: 0.75rem 0;
   margin-bottom: 1.5rem;
   text-align: center;
   position: relative;
 }
 
-.gazette-banner-img {
+.gazette-banner-container {
+  position: relative;
   width: 100%;
-  max-height: 140px;
-  object-fit: cover;
   border: 2px solid var(--paper-border);
   margin-bottom: 0.75rem;
+  background-color: var(--paper-card);
+  overflow: hidden;
+}
+
+.gazette-banner-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  opacity: 0.35;
   filter: contrast(1.1) sepia(0.2);
 }
 
-.gazette-submeta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--paper-border);
-  border-bottom: 1px solid var(--paper-border);
-  padding: 0.35rem 0.75rem;
-  font-family: var(--font-typewriter);
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 0.5rem;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.gazette-title-group {
-  margin: 0.5rem 0;
+.gazette-title-overlay {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  text-align: center;
 }
 
 .gazette-masthead-title {
   font-family: var(--font-headline);
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  line-height: 1.1;
+  letter-spacing: 3px;
+  line-height: 1.05;
   color: var(--ink-primary);
-  text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+  text-shadow: 2px 2px 0px rgba(255,255,255,0.4);
 }
 
 .gazette-subtitle {
@@ -153,14 +147,39 @@ body::before {
   text-transform: uppercase;
   color: var(--crimson-accent);
   font-weight: 700;
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 }
 
-/* Control Bar Buttons */
+.gazette-submeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--paper-border);
+  border-bottom: 1px solid var(--paper-border);
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-typewriter);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.gazette-date-badge {
+  font-weight: bold;
+  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Control Bar Buttons & Dropdowns */
 .gazette-controls {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 /* ==========================================================================
@@ -175,7 +194,7 @@ body::before {
   background-color: var(--paper-card);
   color: var(--ink-primary);
   border: 2px solid var(--paper-border);
-  padding: 0.45rem 0.9rem;
+  padding: 0.45rem 0.85rem;
   cursor: pointer;
   box-shadow: 3px 3px 0px var(--paper-border);
   transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
@@ -206,15 +225,27 @@ body::before {
 
 .press-badge {
   font-family: var(--font-typewriter);
-  font-size: 0.72rem;
-  padding: 0.15rem 0.4rem;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.45rem;
   border: 1px solid var(--paper-border);
   background-color: var(--paper-card);
   text-transform: uppercase;
+  font-weight: bold;
+}
+
+.press-select {
+  font-family: var(--font-typewriter);
+  font-size: 0.8rem;
+  background: var(--paper-card);
+  color: var(--ink-primary);
+  border: 2px solid var(--paper-border);
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--paper-border);
 }
 
 /* ==========================================================================
-   EDITOR WORKBENCH / DROPZONE & NAVIGATION VIEWS
+   VIEWS & WORKBENCH
    ========================================================================== */
 .view-panel {
   display: none;
@@ -230,7 +261,6 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Typesetting Drop Zone */
 .typesetting-workbench {
   border: 3px dashed var(--paper-border);
   background-color: var(--paper-card);
@@ -267,7 +297,6 @@ body::before {
   margin-bottom: 1.25rem;
 }
 
-/* Format Seals */
 .format-seals {
   display: flex;
   justify-content: center;
@@ -387,7 +416,6 @@ body::before {
   gap: 0.4rem;
 }
 
-/* Empty State */
 .empty-rack {
   text-align: center;
   padding: 3rem 1rem;
@@ -438,10 +466,9 @@ body::before {
   margin-bottom: 1.5rem;
 }
 
-/* Broadsheet Columns Styling */
 .broadsheet-content {
   font-family: var(--font-body);
-  font-size: 1.12rem;
+  font-size: 18px;
   line-height: 1.75;
   color: var(--ink-primary);
   column-count: 2;
@@ -460,7 +487,6 @@ body::before {
   }
 }
 
-/* Drop Cap Letterpress Styling */
 .broadsheet-content p:first-of-type::first-letter {
   font-family: var(--font-headline);
   font-size: 3.6rem;
@@ -473,7 +499,6 @@ body::before {
   font-weight: 900;
 }
 
-/* Canvas View for PDF */
 #pdf-canvas-container {
   display: flex;
   flex-direction: column;
@@ -490,7 +515,6 @@ body::before {
   height: auto;
 }
 
-/* Paragraph Highlight for Audiobook TTS */
 .tts-reading-highlight {
   background-color: var(--highlight-tint);
   border-left: 3px solid var(--crimson-accent);
@@ -498,7 +522,6 @@ body::before {
   transition: background-color 0.2s ease;
 }
 
-/* Reader Page Controls Bar */
 .reader-nav-footer {
   display: flex;
   justify-content: space-between;
@@ -570,17 +593,8 @@ body::before {
   flex-wrap: wrap;
 }
 
-.press-select {
-  font-family: var(--font-typewriter);
-  font-size: 0.8rem;
-  background: var(--bg-color);
-  color: var(--ink-primary);
-  border: 1px solid var(--paper-border);
-  padding: 0.3rem 0.5rem;
-}
-
 /* ==========================================================================
-   MODALS & DRAWERS
+   MODALS
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -601,7 +615,7 @@ body::before {
   background: var(--paper-card);
   border: 3px double var(--paper-border);
   padding: 1.75rem;
-  max-width: 650px;
+  max-width: 600px;
   width: 100%;
   max-height: 85vh;
   overflow-y: auto;
@@ -641,7 +655,6 @@ body::before {
   font-weight: bold;
 }
 
-/* Quick Toast Message */
 #toast-notice {
   position: fixed;
   bottom: 20px;
