@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Readify Gazette</string>
+    <string name="title_activity_main">Readify Gazette</string>
+    <string name="package_name">com.readify.broadsheet</string>
+    <string name="custom_url_scheme">com.readify.broadsheet</string>
+</resources>

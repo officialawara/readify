@@ -1,13 +1,13 @@
 {
   "appId": "com.readify.broadsheet",
   "appName": "Readify Gazette",
-  "webDir": ".",
-  "bundledWebRuntime": false,
+  "webDir": "www",
   "server": {
-    "androidScheme": "https"
+    "androidScheme": "https",
+    "allowNavigation": []
   },
   "android": {
-    "allowMixedContent": true,
+    "allowMixedContent": false,
     "captureInput": true,
     "backgroundColor": "#F6F2E8"
   }

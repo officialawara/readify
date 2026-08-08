@@ -4,9 +4,10 @@
   "description": "Readify — Broadsheet Gazette & Letterpress Print Shop eReader & Audiobook App for Android APK & Web",
   "main": "index.html",
   "scripts": {
-    "start": "npx serve .",
-    "cap:add": "npx cap add android",
-    "cap:copy": "npx cap copy android",
+    "build": "powershell -Command \"New-Item -ItemType Directory -Force -Path www; Copy-Item -Recurse -Force index.html, css, js, assets www/\"",
+    "start": "npx serve www",
+    "cap:add": "npm run build && npx cap add android",
+    "cap:sync": "npm run build && npx cap sync android",
     "cap:open": "npx cap open android"
   },
   "keywords": [
