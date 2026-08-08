@@ -43,7 +43,7 @@
           <button class="press-btn" id="btn-theme-paper" title="Newsprint Paper Mode">📄 Paper</button>
           <button class="press-btn" id="btn-theme-sepia" title="Warm Parchment Mode">📜 Parchment</button>
           <button class="press-btn" id="btn-theme-night" title="Midnight Press Dark Mode">🌙 Night</button>
-          <button class="press-btn press-btn-primary" id="btn-github-modal" title="GitHub & APK Guide">⚙️ GitHub / APK</button>
+          <button class="press-btn press-btn-primary" id="btn-settings-modal" title="Typography & Press Settings">⚙️ Settings</button>
         </div>
       </div>
     </header>
@@ -182,31 +182,40 @@
     </div>
   </div>
 
-  <!-- GITHUB & APK GUIDE MODAL -->
-  <div class="modal-overlay" id="modal-github">
+  <!-- PRESS TYPOGRAPHY & LAYOUT SETTINGS MODAL -->
+  <div class="modal-overlay" id="modal-settings">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">GitHub Project & Android APK Build Guide</h3>
-        <button class="press-btn" id="btn-close-github">✕ Close</button>
+        <h3 class="modal-title">Printing Press Settings</h3>
+        <button class="press-btn" id="btn-close-settings">✕ Close</button>
       </div>
-      <div style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6;">
-        <h4 style="font-family: var(--font-headline); margin: 0.8rem 0 0.4rem 0;">1. GitHub Repository Remote Setup</h4>
-        <p>Your local Git repository is initialized with all source files. To push to your GitHub account:</p>
-        <pre style="background: rgba(0,0,0,0.06); padding: 0.5rem; border: 1px solid var(--paper-border); font-family: var(--font-typewriter); margin: 0.4rem 0;">
-git remote add origin https://github.com/officialawara/readify.git
-git branch -M main
-git push -u origin main</pre>
+      <div style="font-family: var(--font-body); font-size: 1rem; line-height: 1.6;">
+        <div style="margin-bottom: 1.25rem;">
+          <label style="font-family: var(--font-typewriter); font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 0.4rem;">TYPESETTING FONT:</label>
+          <select id="setting-font-family" class="press-select" style="width: 100%; padding: 0.5rem;">
+            <option value="'Newsreader', 'Lora', Georgia, serif">Newsreader Gazette Serif (Default)</option>
+            <option value="'Lora', serif">Lora Classic Book</option>
+            <option value="'Playfair Display', serif">Playfair Editorial</option>
+            <option value="'Courier Prime', monospace">Typewriter Monospace</option>
+          </select>
+        </div>
 
-        <h4 style="font-family: var(--font-headline); margin: 0.8rem 0 0.4rem 0;">2. Building Android APK via Capacitor</h4>
-        <p>This project is configured with <strong>Capacitor CLI</strong> for compiling into a native Android APK:</p>
-        <pre style="background: rgba(0,0,0,0.06); padding: 0.5rem; border: 1px solid var(--paper-border); font-family: var(--font-typewriter); margin: 0.4rem 0;">
-npm install
-npx cap add android
-npx cap copy android
-npx cap open android  # Opens in Android Studio to build APK</pre>
+        <div style="margin-bottom: 1.25rem;">
+          <label style="font-family: var(--font-typewriter); font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 0.4rem;">LINE SPACING:</label>
+          <select id="setting-line-height" class="press-select" style="width: 100%; padding: 0.5rem;">
+            <option value="1.5">Compact (1.5x)</option>
+            <option value="1.75" selected>Standard Gazette (1.75x)</option>
+            <option value="2.0">Relaxed Editorial (2.0x)</option>
+          </select>
+        </div>
 
-        <h4 style="font-family: var(--font-headline); margin: 0.8rem 0 0.4rem 0;">3. Formats Supported</h4>
-        <p>Includes PDF parsing via PDF.js, EPUB parsing via ePub.js, TXT, Markdown, HTML, FB2, and Web Speech API Text-to-Speech audiobook playback.</p>
+        <div style="margin-bottom: 1.25rem;">
+          <label style="font-family: var(--font-typewriter); font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 0.4rem;">TEXT ALIGNMENT:</label>
+          <select id="setting-text-align" class="press-select" style="width: 100%; padding: 0.5rem;">
+            <option value="justify" selected>Justified Broadsheet</option>
+            <option value="left">Left Aligned</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>

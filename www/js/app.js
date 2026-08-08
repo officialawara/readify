@@ -58,13 +58,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // 3. GitHub & APK Guide Modal
-  const btnGithubModal = document.getElementById('btn-github-modal');
-  const modalGithub = document.getElementById('modal-github');
-  const btnCloseGithub = document.getElementById('btn-close-github');
+  // 3. Typography & Printing Press Settings Modal
+  const btnSettingsModal = document.getElementById('btn-settings-modal');
+  const modalSettings = document.getElementById('modal-settings');
+  const btnCloseSettings = document.getElementById('btn-close-settings');
+  const settingFontFamily = document.getElementById('setting-font-family');
+  const settingLineHeight = document.getElementById('setting-line-height');
+  const settingTextAlign = document.getElementById('setting-text-align');
 
-  btnGithubModal?.addEventListener('click', () => modalGithub.classList.add('active'));
-  btnCloseGithub?.addEventListener('click', () => modalGithub.classList.remove('active'));
+  btnSettingsModal?.addEventListener('click', () => modalSettings.classList.add('active'));
+  btnCloseSettings?.addEventListener('click', () => modalSettings.classList.remove('active'));
+
+  settingFontFamily?.addEventListener('change', (e) => {
+    const broadsheetArea = document.getElementById('broadsheet-text-area');
+    if (broadsheetArea) broadsheetArea.style.fontFamily = e.target.value;
+    localStorage.setItem('readify_font_family', e.target.value);
+    showToast('Font updated');
+  });
+
+  settingLineHeight?.addEventListener('change', (e) => {
+    const broadsheetArea = document.getElementById('broadsheet-text-area');
+    if (broadsheetArea) broadsheetArea.style.lineHeight = e.target.value;
+    localStorage.setItem('readify_line_height', e.target.value);
+    showToast('Line spacing updated');
+  });
+
+  settingTextAlign?.addEventListener('change', (e) => {
+    const broadsheetArea = document.getElementById('broadsheet-text-area');
+    if (broadsheetArea) broadsheetArea.style.textAlign = e.target.value;
+    localStorage.setItem('readify_text_align', e.target.value);
+    showToast('Text alignment updated');
+  });
+
+  // Restore Settings
+  const savedFont = localStorage.getItem('readify_font_family');
+  const savedLineHeight = localStorage.getItem('readify_line_height');
+  const savedTextAlign = localStorage.getItem('readify_text_align');
+  const broadsheetArea = document.getElementById('broadsheet-text-area');
+  
+  if (savedFont && broadsheetArea) broadsheetArea.style.fontFamily = savedFont;
+  if (savedLineHeight && broadsheetArea) broadsheetArea.style.lineHeight = savedLineHeight;
+  if (savedTextAlign && broadsheetArea) broadsheetArea.style.textAlign = savedTextAlign;
 
   // 4. File Drag & Drop Workbench
   const workbenchDropzone = document.getElementById('workbench-dropzone');
@@ -118,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (extension === 'pdf' && window.pdfHandler) {
         bookFormat = 'PDF';
         const pdfMeta = await window.pdfHandler.loadPDF(arrayBuffer);
-        parsedContent = arrayBuffer; // ArrayBuffer passed to pdfHandler
+        parsedContent = arrayBuffer;
       } else if (extension === 'epub' && window.epubHandler) {
         bookFormat = 'EPUB';
         const epubMeta = await window.epubHandler.loadEPUB(arrayBuffer);
@@ -126,7 +160,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         author = epubMeta.author || author;
         toc = epubMeta.toc || [];
         
-        // Extract text from chapters
         let fullText = [];
         for (let i = 0; i < Math.min(epubMeta.chaptersCount, 25); i++) {
           const chText = await window.epubHandler.getChapterText(i);
@@ -134,7 +167,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         parsedContent = fullText.join('\n\n');
       } else {
-        // Text / Markdown / HTML / FB2
         const decoder = new TextDecoder('utf-8');
         parsedContent = decoder.decode(arrayBuffer);
       }
@@ -171,7 +203,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let books = await window.readifyLibrary.getAllBooks();
 
-    // If empty library, seed pre-loaded broadsheet classics
     if (!books || books.length === 0) {
       books = getSampleClassics();
       for (const b of books) {
@@ -247,7 +278,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const rateSelect = document.getElementById('tts-rate-select');
     const statusBadge = document.getElementById('tts-status-badge');
 
-    // Populate system TTS voices
     const voices = window.ttsEngine.getAvailableVoices();
     voiceSelect.innerHTML = '<option value="">Default System Voice</option>';
     voices.forEach(voice => {
@@ -306,7 +336,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         title: 'Alice in Wonderland Gazette',
         author: 'Lewis Carroll',
         format: 'GAZETTE',
-        content: `CHAPTER I. DOWN THE RABBIT-HOLE\n\nAlice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversations?'\n\nSo she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.\n\nThere was nothing so VERY remarkable in that; nor did Alice think it so VERY much out of the way to hear the Rabbit say to itself, 'Oh dear! Oh dear! I shall be late!' (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually TOOK A WATCH OUT OF ITS WAISTCOAT-POCKET, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.`,
+        content: `CHAPTER I. DOWN THE RABBIT-HOLE\n\nAlice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversations?'\n\nSo she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.\n\nThere was nothing so VERY remarkable in that; nor did Alice think it so VERY much out of the way to hear the Rabbit say to itself, 'Oh dear! Oh dear! I shall be late!' (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually TOOK A WATCH OUT OF ITS WAISTCOAT-POCKET, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she turned across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.`,
         currentPage: 1,
         totalPages: 1,
         progress: 0,
@@ -316,11 +346,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function escapeHTML(str) {
-    return str.replace(/[&<>'"]/g, 
+    return String(str).replace(/[&<>'"]/g, 
       tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
     );
   }
 
-  // Initial Rack Render
   renderLibraryRack();
 });
