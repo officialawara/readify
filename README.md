@@ -1,102 +1,72 @@
-# 📰 Readify — Broadsheet Gazette & Letterpress eReader (APK & Web)
+# 📰 Readify — Broadsheet Gazette & Letterpress eReader
 
 > A vintage 19th-century broadsheet newspaper and letterpress print shop styled eBook reader & audiobook application for Android and Web.
 
-![Readify Letterpress Icon](assets/icon.jpg)
+![Readify Letterpress Emblem](assets/icon.jpg)
+
+---
+
+## 📱 Download Ready-to-Install Android APK
+
+- **[Download Readify Gazette APK (Direct Download)](https://github.com/officialawara/readify/releases/latest)**
+- **Format**: `.apk` (Android Package)
+- **Compatibility**: Android 7.0 (API Level 24) and higher
+- **Features Included**: Multi-format eBook reader (PDF, EPUB, TXT, MD), Text-to-Speech Audiobook Engine, 100% Offline Mode, Content Security Policy (CSP) protection.
 
 ---
 
 ## 🌟 Key Features
 
-1. **Broadsheet Newspaper & Letterpress Print Shop Aesthetic**:
-   - **Themes**: Aged Newsprint Paper (`#F6F2E8`), Warm Parchment (`#F3E5C8`), and Midnight Printing Press Night Edition (`#12100E`).
-   - **Typography**: Google Fonts (*UnifrakturMaguntia* Gothic Blackletter masthead, *Playfair Display* news headlines, *Newsreader* / *Lora* body serif, and *Courier Prime* typewriter details).
-   - **Tactile UI Elements**: Double ink rule borders, drop-cap first letters, mechanical pressed buttons, woodblock badges, classified ads sidebar, and ribbon bookmark progress.
+### 1. Broadsheet Newspaper & Letterpress Print Shop Aesthetic
+- **Three Newspaper Editions**:
+  - 📄 **Paper Edition**: Vintage newsprint parchment (`#F6F2E8`).
+  - 📜 **Warm Parchment Edition**: Aged golden manuscript tone (`#F3E5C8`).
+  - 🌙 **Midnight Press Edition**: Dark mode night newsprint printing press style (`#12100E`).
+- **Typography & Craftsmanship**: Google Fonts (*UnifrakturMaguntia* Gothic Blackletter masthead, *Playfair Display* news headlines, *Newsreader* / *Lora* body serif, and *Courier Prime* typewriter details).
+- **Tactile UI Elements**: Double ink rule borders, drop-cap first letters, mechanical pressed buttons, woodblock seals, classified sectioning, and ribbon progress tracking.
 
-2. **Multi-Format Document Parsing**:
-   - **PDF Parsing**: Powered by Mozilla's open-source **PDF.js** (from GitHub). Renders crisp pages on canvas with text selection and text block extraction for Text-to-Speech.
-   - **EPUB Parsing**: Powered by Futurepress **ePub.js** (from GitHub). Renders `.epub` archives, dynamic chapter pagination, table of contents, and reflowable typography.
-   - **TXT / Markdown / HTML / FB2**: Native clean text processing with automatic paragraph chunking into multi-column broadsheet pages.
+### 2. Multi-Format Document Engine
+- **PDF Parsing**: Powered by Mozilla's open-source **PDF.js**. Renders crisp pages onto canvas containers with text block extraction for broadsheet view and audiobook speech.
+- **EPUB Parsing**: Powered by Futurepress **ePub.js**. Renders `.epub` archives, dynamic chapter pagination, table of contents (TOC), and reflowable typography.
+- **TXT / Markdown / HTML / FB2**: Native clean text processing with automatic multi-column broadsheet formatting.
 
-3. **Text-to-Speech (TTS) Audiobook Engine**:
-   - Integrated Web Speech API (`SpeechSynthesis`) with support for Android system voices.
-   - Vintage Phonograph Audio Deck controls: Play, Pause, Resume, Stop, Next/Prev Sentence, Speed Dial (`0.75x` – `2.0x`), Voice Selector, and live sentence highlighting on the broadsheet stage.
+### 3. Text-to-Speech (TTS) Audiobook Engine
+- Integrated Web Speech API (`SpeechSynthesis`) supporting all installed Android system TTS voices.
+- Vintage Phonograph Audio Deck controls: Play, Pause, Resume, Stop, Next/Prev Sentence, Speed Dial (`0.75x` – `2.0x`), Voice Selector, and **live sentence highlighting** on the broadsheet stage.
 
-4. **Library & Persistence**:
-   - Offline file caching using IndexedDB and LocalStorage.
-   - Pre-loaded broadsheet classics (*The Sherlock Holmes Gazette*, *Alice in Wonderland*).
-
----
-
-## 📱 Compiling into an Android APK
-
-This application is built with standard web technologies and configured with **Capacitor CLI** for instant Android APK compilation.
-
-### Step 1: Install Dependencies
-```bash
-npm install
-```
-
-### Step 2: Add Android Platform & Build APK
-```bash
-# Add Android native platform
-npx cap add android
-
-# Copy web assets into Android project
-npx cap copy android
-
-# Open project in Android Studio to build APK or run via Gradle
-npx cap open android
-```
-
-In Android Studio:
-- Select **Build** > **Build Bundle(s) / APK(s)** > **Build APK(s)**.
-- Your Android APK will be generated at `android/app/build/outputs/apk/debug/app-debug.apk`.
+### 4. Comprehensive Security & Anti-XSS Engine
+- **Content Security Policy (CSP)** meta headers.
+- **Zero CDN Dependency**: All core parsing libraries (`pdf.min.js`, `pdf.worker.min.js`, `jszip.min.js`, `epub.min.js`) are bundled locally for 100% offline security.
+- **DOM Parser Anti-XSS Sanitizer**: Automatically strips `<script>`, `<iframe>`, `<object>`, `<embed>`, inline event handlers (`onload`, `onerror`, `onclick`), and `javascript:` URIs from user-imported documents.
+- **Android Hardening**: Configured with `android:allowBackup="false"` and `android:usesCleartextTraffic="false"`.
 
 ---
 
-## 🌐 Tracking Project on GitHub
-
-To track this project on your GitHub account:
-
-```bash
-# Initialize git (already performed locally)
-git init
-
-# Add remote repository
-git remote add origin https://github.com/YOUR_USERNAME/readify-broadsheet.git
-
-# Rename branch to main
-git branch -M main
-
-# Commit and push
-git add .
-git commit -m "feat: initial release of Readify Broadsheet Gazette eReader"
-git push -u origin main
-```
-
----
-
-## 📁 Project Architecture
+## 📁 Repository Architecture
 
 ```
 readify/
-├── index.html                 # Broadsheet Gazette HTML Shell & Markup
-├── css/
-│   └── styles.css             # Broadsheet & Letterpress Design System
+├── android/                   # Native Android Studio & Gradle Project
+│   ├── app/
+│   │   ├── src/main/
+│   │   │   ├── AndroidManifest.xml   # Hardened Android Manifest
+│   │   │   └── java/com/readify/broadsheet/MainActivity.java
+│   │   └── build.gradle
+│   └── build.gradle
+├── www/                       # Bundled Web Production Assets
 ├── js/
-│   ├── app.js                 # Main Application Controller & UI Binder
-│   ├── reader.js              # Broadsheet Reader Stage & Pagination
-│   ├── pdf-handler.js         # Mozilla PDF.js Parsing Engine
-│   ├── epub-handler.js        # Futurepress ePub.js Parsing Engine
-│   ├── tts-engine.js          # SpeechSynthesis Audiobook Engine
-│   └── library.js             # IndexedDB & LocalStorage Book Persistence
+│   ├── vendor/                # Bundled Offline PDF.js, ePub.js & JSZip
+│   ├── pdf-handler.js
+│   ├── epub-handler.js
+│   ├── tts-engine.js
+│   ├── reader.js
+│   ├── library.js
+│   └── app.js
 ├── assets/
-│   ├── icon.jpg               # Woodcut Letterpress Icon
+│   ├── icon.jpg               # Letterpress Woodcut Icon
 │   └── masthead.jpg           # Broadsheet Banner Decoration
-├── capacitor.config.json      # Capacitor Configuration for Android APK
-├── package.json               # NPM Package Manifest
-├── .gitignore                 # Git ignore file
+├── index.html                 # CSP-Hardened App Shell
+├── capacitor.config.json      # Capacitor Configuration
 └── README.md                  # Project Documentation
 ```
 
