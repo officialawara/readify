@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Browser Cache Invalidation Headers -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
   <title>Readify — Broadsheet Gazette & Letterpress eReader</title>
 
   <!-- Security Hardening Content Security Policy (CSP) -->
@@ -14,12 +20,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 
   <!-- Offline Local Vendor JS Libraries (Zero CDN Dependency for Maximum Security) -->
-  <script src="js/vendor/pdf.min.js"></script>
-  <script src="js/vendor/jszip.min.js"></script>
-  <script src="js/vendor/epub.min.js"></script>
+  <script src="js/vendor/pdf.min.js?v=1.0.1"></script>
+  <script src="js/vendor/jszip.min.js?v=1.0.1"></script>
+  <script src="js/vendor/epub.min.js?v=1.0.1"></script>
 
   <!-- App Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=1.0.1">
 </head>
 <body class="theme-paper">
 
@@ -224,11 +230,11 @@
   <div id="toast-notice"></div>
 
   <!-- JS Modules -->
-  <script src="js/library.js"></script>
-  <script src="js/pdf-handler.js"></script>
-  <script src="js/epub-handler.js"></script>
-  <script src="js/tts-engine.js"></script>
-  <script src="js/reader.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/library.js?v=1.0.1"></script>
+  <script src="js/pdf-handler.js?v=1.0.1"></script>
+  <script src="js/epub-handler.js?v=1.0.1"></script>
+  <script src="js/tts-engine.js?v=1.0.1"></script>
+  <script src="js/reader.js?v=1.0.1"></script>
+  <script src="js/app.js?v=1.0.1"></script>
 </body>
 </html>
