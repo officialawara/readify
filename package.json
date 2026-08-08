@@ -1,0 +1,29 @@
+{
+  "name": "readify-broadsheet",
+  "version": "1.0.0",
+  "description": "Readify — Broadsheet Gazette & Letterpress Print Shop eReader & Audiobook App for Android APK & Web",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "cap:add": "npx cap add android",
+    "cap:copy": "npx cap copy android",
+    "cap:open": "npx cap open android"
+  },
+  "keywords": [
+    "pdf-reader",
+    "epub-reader",
+    "broadsheet",
+    "letterpress",
+    "text-to-speech",
+    "audiobook",
+    "apk",
+    "android"
+  ],
+  "author": "Readify Gazette Team",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0"
+  }
+}

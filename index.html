@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Readify — Broadsheet Gazette & Letterpress eReader</title>
+
+  <!-- Broadsheet Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+  <!-- PDF.js Engine (Mozilla Open Source from GitHub) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+
+  <!-- JSZip & ePub.js Engine (Futurepress Open Source from GitHub) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-paper">
+
+  <div id="app-container">
+
+    <!-- MASTHEAD HEADER -->
+    <header class="gazette-header">
+      <img src="assets/masthead.jpg" alt="Broadsheet Gazette Banner" class="gazette-banner-img">
+      
+      <div class="gazette-title-group">
+        <h1 class="gazette-masthead-title">The Readify Gazette</h1>
+        <div class="gazette-subtitle">★ Letterpress eReader & Phonograph Audiobook Edition ★</div>
+      </div>
+
+      <div class="gazette-submeta">
+        <div>VOL. CXXIV — NO. 42</div>
+        <div>LONDON & NEW YORK PRINTING PRESS</div>
+        <div id="date-stamp">SPECIAL EDITION</div>
+        
+        <div class="gazette-controls">
+          <button class="press-btn" id="btn-theme-paper" title="Newsprint Paper Mode">📄 Paper</button>
+          <button class="press-btn" id="btn-theme-sepia" title="Warm Parchment Mode">📜 Parchment</button>
+          <button class="press-btn" id="btn-theme-night" title="Midnight Press Dark Mode">🌙 Night</button>
+          <button class="press-btn press-btn-primary" id="btn-github-modal" title="GitHub & APK Guide">⚙️ GitHub / APK</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- VIEW 1: LIBRARY & TYPESETTING WORKBENCH -->
+    <main id="view-library" class="view-panel active">
+      
+      <!-- Typesetting Workbench Drop Zone -->
+      <section class="typesetting-workbench" id="workbench-dropzone">
+        <div class="workbench-icon">🖋️</div>
+        <h2 class="workbench-title">Typesetting Workbench — Import Any Book</h2>
+        <p class="workbench-subtitle">Drag and drop your document here, or click to open file picker</p>
+        <input type="file" id="file-input" accept=".pdf,.epub,.txt,.md,.html,.fb2" style="display: none;">
+        
+        <button class="press-btn press-btn-primary" id="btn-open-file">
+          📂 Select File from Storage
+        </button>
+
+        <div class="format-seals">
+          <span class="seal-tag">PDF (PDF.js)</span>
+          <span class="seal-tag">EPUB (ePub.js)</span>
+          <span class="seal-tag">TXT</span>
+          <span class="seal-tag">MARKDOWN</span>
+          <span class="seal-tag">HTML</span>
+        </div>
+      </section>
+
+      <!-- Gazette Library Rack -->
+      <section class="library-section">
+        <div class="section-masthead">
+          <h2 class="section-title">The Press Archives — Your Books</h2>
+          <span class="press-badge" id="library-count">0 VOLUMES</span>
+        </div>
+
+        <div class="library-grid" id="library-grid">
+          <!-- Dynamically populated book cards -->
+        </div>
+
+        <div class="empty-rack" id="empty-rack-notice" style="display: none;">
+          <p>❖ No books in the archive. Import a PDF, EPUB, or TXT file above to begin reading. ❖</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- VIEW 2: BROADSHEET READER STAGE -->
+    <main id="view-reader" class="view-panel">
+      
+      <!-- Reader Header Bar -->
+      <div class="reader-top-bar">
+        <button class="press-btn" id="btn-back-library">← Library</button>
+        
+        <div class="reader-book-info">
+          <div class="reader-book-title" id="reader-title">Book Title</div>
+          <div class="reader-book-chapter" id="reader-chapter">Chapter I</div>
+        </div>
+
+        <div class="gazette-controls">
+          <button class="press-btn" id="btn-toc">📜 Contents</button>
+          <button class="press-btn" id="btn-columns-toggle" title="Toggle 1 or 2 Broadsheet Columns">📖 Columns</button>
+          <button class="press-btn" id="btn-font-dec" title="Decrease Text Size">A-</button>
+          <button class="press-btn" id="btn-font-inc" title="Increase Text Size">A+</button>
+        </div>
+      </div>
+
+      <!-- Main Broadsheet Stage Container -->
+      <div class="broadsheet-stage" id="broadsheet-stage">
+        <!-- Text Content Area -->
+        <article class="broadsheet-content" id="broadsheet-text-area">
+          <!-- Text rendered here -->
+        </article>
+
+        <!-- Canvas Container for PDF Files -->
+        <div id="pdf-canvas-container" style="display: none;">
+          <!-- Canvas elements dynamically appended -->
+        </div>
+      </div>
+
+      <!-- Reader Navigation Footer -->
+      <div class="reader-nav-footer">
+        <button class="press-btn" id="btn-prev-page">◄ Previous Page</button>
+        <div class="page-indicator" id="page-indicator">Page 1 of 1</div>
+        <button class="press-btn" id="btn-next-page">Next Page ►</button>
+      </div>
+
+      <!-- VINTAGE AUDIOBOOK PHONOGRAPH DECK -->
+      <div class="audio-deck" id="audio-deck">
+        <div class="audio-deck-header">
+          <div class="audio-deck-title">
+            🎙️ Phonograph Audiobook Engine — Text-to-Speech
+          </div>
+          <div class="press-badge" id="tts-status-badge">READY</div>
+        </div>
+
+        <div class="audio-deck-controls">
+          <div class="audio-main-buttons">
+            <button class="press-btn press-btn-primary" id="btn-tts-play">▶ Play Audiobook</button>
+            <button class="press-btn" id="btn-tts-pause">⏸ Pause</button>
+            <button class="press-btn" id="btn-tts-stop">⏹ Stop</button>
+            <button class="press-btn" id="btn-tts-prev">⏮ Prev</button>
+            <button class="press-btn" id="btn-tts-next">⏭ Next</button>
+          </div>
+
+          <div class="audio-settings-group">
+            <label for="tts-voice-select" class="press-badge">Voice:</label>
+            <select id="tts-voice-select" class="press-select">
+              <option value="">Default System Voice</option>
+            </select>
+
+            <label for="tts-rate-select" class="press-badge">Speed:</label>
+            <select id="tts-rate-select" class="press-select">
+              <option value="0.75">0.75x</option>
+              <option value="1.0" selected>1.0x (Normal)</option>
+              <option value="1.25">1.25x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2.0">2.0x</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- TABLE OF CONTENTS MODAL -->
+  <div class="modal-overlay" id="modal-toc">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Table of Contents</h3>
+        <button class="press-btn" id="btn-close-toc">✕ Close</button>
+      </div>
+      <ul class="toc-list" id="toc-list-items">
+        <!-- Populated dynamically -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- GITHUB & APK GUIDE MODAL -->
+  <div class="modal-overlay" id="modal-github">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">GitHub Project & Android APK Build Guide</h3>
+        <button class="press-btn" id="btn-close-github">✕ Close</button>
+      </div>
+      <div style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6;">
+        <h4 style="font-family: var(--font-headline); margin: 0.8rem 0 0.4rem 0;">1. GitHub Repository Remote Setup</h4>
+        <p>Your local Git repository is initialized with all source files. To push to your GitHub account:</p>
+        <pre style="background: rgba(0,0,0,0.06); padding: 0.5rem; border: 1px solid var(--paper-border); font-family: var(--font-typewriter); margin: 0.4rem 0;">
+git remote add origin https://github.com/YOUR_USERNAME/readify-broadsheet.git
+git branch -M main
+git push -u origin main</pre>
+
+        <h4 style="font-family: var(--font-headline); margin: 0.8rem 0 0.4rem 0;">2. Building Android APK via Capacitor</h4>
+        <p>This project is configured with <strong>Capacitor CLI</strong> for compiling into a native Android APK:</p>
+        <pre style="background: rgba(0,0,0,0.06); padding: 0.5rem; border: 1px solid var(--paper-border); font-family: var(--font-typewriter); margin: 0.4rem 0;">
+npm install
+npx cap add android
+npx cap copy android
+npx cap open android  # Opens in Android Studio to build APK</pre>
+
+        <h4 style="font-family: var(--font-headline); margin: 0.8rem 0 0.4rem 0;">3. Formats Supported</h4>
+        <p>Includes PDF parsing via PDF.js, EPUB parsing via ePub.js, TXT, Markdown, HTML, FB2, and Web Speech API Text-to-Speech audiobook playback.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-notice"></div>
+
+  <!-- JS Modules -->
+  <script src="js/library.js"></script>
+  <script src="js/pdf-handler.js"></script>
+  <script src="js/epub-handler.js"></script>
+  <script src="js/tts-engine.js"></script>
+  <script src="js/reader.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

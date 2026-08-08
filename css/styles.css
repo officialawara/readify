@@ -1,0 +1,658 @@
+/* ==========================================================================
+   READIFY GAZETTE — Broadsheet Newspaper & Letterpress Print Shop Aesthetics
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=UnifrakturMaguntia&display=swap');
+
+:root {
+  /* Paper & Ink Color Tokens */
+  --bg-color: #F6F2E8;
+  --paper-card: #EFE8D8;
+  --paper-border: #1B1917;
+  --ink-primary: #121110;
+  --ink-secondary: #4A443C;
+  --ink-muted: #736C62;
+  --crimson-accent: #7A1F1D;
+  --gold-accent: #8C6D3B;
+  --amber-tint: #D4AF37;
+  --highlight-tint: rgba(225, 193, 110, 0.45);
+  
+  /* Typography Fonts */
+  --font-masthead: 'UnifrakturMaguntia', serif;
+  --font-headline: 'Playfair Display', serif;
+  --font-body: 'Newsreader', 'Lora', Georgia, serif;
+  --font-typewriter: 'Courier Prime', monospace;
+  --font-engraved: 'Cinzel', serif;
+
+  /* Layout Spacing */
+  --header-height: 70px;
+  --reader-max-width: 1200px;
+  --transition-speed: 0.2s;
+}
+
+/* Night Edition Theme (Dark Mode) */
+body.theme-night {
+  --bg-color: #12100E;
+  --paper-card: #1C1A17;
+  --paper-border: #D8CFC0;
+  --ink-primary: #ECE4D8;
+  --ink-secondary: #B5AB9D;
+  --ink-muted: #80776C;
+  --crimson-accent: #C8504B;
+  --gold-accent: #D4AF37;
+  --highlight-tint: rgba(140, 109, 59, 0.5);
+}
+
+/* Warm Sepia Theme */
+body.theme-sepia {
+  --bg-color: #F3E5C8;
+  --paper-card: #E8D5B1;
+  --paper-border: #3A2B1D;
+  --ink-primary: #2B1D12;
+  --ink-secondary: #57412E;
+  --crimson-accent: #8B2624;
+}
+
+/* Global Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--ink-primary);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+/* Newspaper Print Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+/* App Container */
+#app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem 1rem;
+}
+
+/* ==========================================================================
+   MASTHEAD HEADER & GAZETTE BAR
+   ========================================================================== */
+.gazette-header {
+  border-bottom: 4px double var(--paper-border);
+  padding: 1rem 0 0.75rem 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.gazette-banner-img {
+  width: 100%;
+  max-height: 140px;
+  object-fit: cover;
+  border: 2px solid var(--paper-border);
+  margin-bottom: 0.75rem;
+  filter: contrast(1.1) sepia(0.2);
+}
+
+.gazette-submeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--paper-border);
+  border-bottom: 1px solid var(--paper-border);
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-typewriter);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gazette-title-group {
+  margin: 0.5rem 0;
+}
+
+.gazette-masthead-title {
+  font-family: var(--font-headline);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  color: var(--ink-primary);
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+}
+
+.gazette-subtitle {
+  font-family: var(--font-typewriter);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--crimson-accent);
+  font-weight: 700;
+  margin-top: 0.2rem;
+}
+
+/* Control Bar Buttons */
+.gazette-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* ==========================================================================
+   LETTERPRESS BUTTONS & BADGES
+   ========================================================================== */
+.press-btn {
+  font-family: var(--font-engraved);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: var(--paper-card);
+  color: var(--ink-primary);
+  border: 2px solid var(--paper-border);
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px var(--paper-border);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.press-btn:hover {
+  background-color: var(--bg-color);
+}
+
+.press-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--paper-border);
+}
+
+.press-btn-primary {
+  background-color: var(--crimson-accent);
+  color: #FFFDF7;
+  border-color: var(--paper-border);
+}
+
+.press-btn-primary:hover {
+  background-color: #631715;
+  color: #FFFDF7;
+}
+
+.press-badge {
+  font-family: var(--font-typewriter);
+  font-size: 0.72rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--paper-border);
+  background-color: var(--paper-card);
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   EDITOR WORKBENCH / DROPZONE & NAVIGATION VIEWS
+   ========================================================================== */
+.view-panel {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.view-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Typesetting Drop Zone */
+.typesetting-workbench {
+  border: 3px dashed var(--paper-border);
+  background-color: var(--paper-card);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.typesetting-workbench:hover, .typesetting-workbench.drag-over {
+  border-color: var(--crimson-accent);
+  background-color: rgba(122, 31, 29, 0.04);
+}
+
+.workbench-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--crimson-accent);
+}
+
+.workbench-title {
+  font-family: var(--font-headline);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.workbench-subtitle {
+  font-family: var(--font-typewriter);
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+  margin-bottom: 1.25rem;
+}
+
+/* Format Seals */
+.format-seals {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.seal-tag {
+  font-family: var(--font-typewriter);
+  font-size: 0.75rem;
+  font-weight: bold;
+  border: 1px solid var(--paper-border);
+  padding: 0.2rem 0.5rem;
+  background: var(--bg-color);
+  letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   LIBRARY GAZETTE RACK
+   ========================================================================== */
+.section-masthead {
+  border-bottom: 2px solid var(--paper-border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.section-title {
+  font-family: var(--font-headline);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.book-card {
+  border: 2px solid var(--paper-border);
+  background-color: var(--paper-card);
+  padding: 1.2rem;
+  box-shadow: 4px 4px 0px var(--paper-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.book-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px var(--paper-border);
+}
+
+.book-badge-format {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: var(--font-typewriter);
+  font-size: 0.7rem;
+  background-color: var(--crimson-accent);
+  color: #FFFDF7;
+  padding: 0.1rem 0.4rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.book-title {
+  font-family: var(--font-headline);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+  padding-right: 2rem;
+  color: var(--ink-primary);
+}
+
+.book-author {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-secondary);
+  margin-bottom: 1rem;
+}
+
+.book-meta {
+  font-family: var(--font-typewriter);
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  border-top: 1px dashed var(--paper-border);
+  padding-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.progress-bar-container {
+  height: 6px;
+  background-color: rgba(0,0,0,0.1);
+  border: 1px solid var(--paper-border);
+  margin-top: 0.3rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--crimson-accent);
+  width: 0%;
+}
+
+.book-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+/* Empty State */
+.empty-rack {
+  text-align: center;
+  padding: 3rem 1rem;
+  border: 2px dashed var(--paper-border);
+  background-color: var(--paper-card);
+  font-family: var(--font-typewriter);
+  color: var(--ink-secondary);
+}
+
+/* ==========================================================================
+   BROADSHEET READER STAGE
+   ========================================================================== */
+.reader-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--paper-border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.reader-book-info {
+  flex: 1;
+}
+
+.reader-book-title {
+  font-family: var(--font-headline);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.reader-book-chapter {
+  font-family: var(--font-typewriter);
+  font-size: 0.82rem;
+  color: var(--crimson-accent);
+  text-transform: uppercase;
+}
+
+.broadsheet-stage {
+  min-height: 60vh;
+  border: 2px solid var(--paper-border);
+  background-color: var(--paper-card);
+  padding: 2.5rem;
+  box-shadow: 5px 5px 0px var(--paper-border);
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+/* Broadsheet Columns Styling */
+.broadsheet-content {
+  font-family: var(--font-body);
+  font-size: 1.12rem;
+  line-height: 1.75;
+  color: var(--ink-primary);
+  column-count: 2;
+  column-gap: 2.75rem;
+  column-rule: 1px solid rgba(0,0,0,0.12);
+  text-align: justify;
+  hyphens: auto;
+}
+
+@media (max-width: 850px) {
+  .broadsheet-content {
+    column-count: 1;
+  }
+  .broadsheet-stage {
+    padding: 1.25rem;
+  }
+}
+
+/* Drop Cap Letterpress Styling */
+.broadsheet-content p:first-of-type::first-letter {
+  font-family: var(--font-headline);
+  font-size: 3.6rem;
+  float: left;
+  line-height: 0.8;
+  padding-top: 4px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+  color: var(--crimson-accent);
+  font-weight: 900;
+}
+
+/* Canvas View for PDF */
+#pdf-canvas-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+.pdf-page-canvas {
+  border: 2px solid var(--paper-border);
+  box-shadow: 3px 3px 0px var(--paper-border);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Paragraph Highlight for Audiobook TTS */
+.tts-reading-highlight {
+  background-color: var(--highlight-tint);
+  border-left: 3px solid var(--crimson-accent);
+  padding-left: 0.3rem;
+  transition: background-color 0.2s ease;
+}
+
+/* Reader Page Controls Bar */
+.reader-nav-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px solid var(--paper-border);
+  padding-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-indicator {
+  font-family: var(--font-typewriter);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   VINTAGE AUDIOBOOK DECK (AUDIO CONTROL BAR)
+   ========================================================================== */
+.audio-deck {
+  border: 3px double var(--paper-border);
+  background-color: var(--paper-card);
+  padding: 1rem 1.25rem;
+  box-shadow: 4px 4px 0px var(--paper-border);
+  margin-bottom: 1.5rem;
+  position: sticky;
+  bottom: 1rem;
+  z-index: 100;
+}
+
+.audio-deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--paper-border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.audio-deck-title {
+  font-family: var(--font-typewriter);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--crimson-accent);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.audio-deck-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.audio-main-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.audio-settings-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.press-select {
+  font-family: var(--font-typewriter);
+  font-size: 0.8rem;
+  background: var(--bg-color);
+  color: var(--ink-primary);
+  border: 1px solid var(--paper-border);
+  padding: 0.3rem 0.5rem;
+}
+
+/* ==========================================================================
+   MODALS & DRAWERS
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 1rem;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--paper-card);
+  border: 3px double var(--paper-border);
+  padding: 1.75rem;
+  max-width: 650px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--paper-border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  font-family: var(--font-headline);
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+
+.toc-list {
+  list-style: none;
+}
+
+.toc-item {
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--paper-border);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: color 0.15s;
+}
+
+.toc-item:hover {
+  color: var(--crimson-accent);
+  font-weight: bold;
+}
+
+/* Quick Toast Message */
+#toast-notice {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--ink-primary);
+  color: var(--bg-color);
+  font-family: var(--font-typewriter);
+  font-size: 0.85rem;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid var(--paper-border);
+  box-shadow: 3px 3px 0px var(--paper-border);
+  z-index: 20000;
+  display: none;
+}
