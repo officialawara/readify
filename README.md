@@ -6,12 +6,22 @@
 
 ---
 
+## 🌐 Try Live Web App (Instant Browser Demo)
+
+Click the link below to open and test the application directly in your web browser (Phone, Tablet, or PC) — no installation required!
+
+👉 **[Launch Readify Live Web Gazette (https://officialawara.github.io/readify/)](https://officialawara.github.io/readify/)**
+
+---
+
 ## 📱 Download Ready-to-Install Android APK
+
+Prefer an Android App on your phone? Download the compiled APK package directly:
 
 - **[Download Readify Gazette APK (Direct Download)](https://github.com/officialawara/readify/releases/latest)**
 - **Format**: `.apk` (Android Package)
 - **Compatibility**: Android 7.0 (API Level 24) and higher
-- **Features Included**: Multi-format eBook reader (PDF, EPUB, TXT, MD), Text-to-Speech Audiobook Engine, 100% Offline Mode, Content Security Policy (CSP) protection.
+- **Features**: Multi-format eBook reader (PDF, EPUB, TXT, MD), Text-to-Speech Audiobook Engine, 100% Offline Mode, Content Security Policy (CSP) security protection.
 
 ---
 
@@ -31,7 +41,7 @@
 - **TXT / Markdown / HTML / FB2**: Native clean text processing with automatic multi-column broadsheet formatting.
 
 ### 3. Text-to-Speech (TTS) Audiobook Engine
-- Integrated Web Speech API (`SpeechSynthesis`) supporting all installed Android system TTS voices.
+- Integrated Web Speech API (`SpeechSynthesis`) supporting all installed Android and desktop system TTS voices.
 - Vintage Phonograph Audio Deck controls: Play, Pause, Resume, Stop, Next/Prev Sentence, Speed Dial (`0.75x` – `2.0x`), Voice Selector, and **live sentence highlighting** on the broadsheet stage.
 
 ### 4. Comprehensive Security & Anti-XSS Engine
